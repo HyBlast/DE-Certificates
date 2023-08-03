@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
 import me.realized.de.certificates.util.ItemUtil;
 import me.realized.de.certificates.util.StringUtil;
 import me.realized.de.certificates.util.compat.Identifiers;
@@ -56,6 +57,10 @@ public class Certificates extends DuelsExtension implements Listener {
 
         if (itemSection.isList("lore")) {
             ItemUtil.editMeta(certificate, meta -> meta.setLore(StringUtil.color(itemSection.getStringList("lore"))));
+        }
+
+        if (itemSection.isInt("model")) {
+            ItemUtil.editMeta(certificate, itemMeta -> itemMeta.setCustomModelData(itemSection.getInt("model")));
         }
 
         this.certificate = Identifiers.addIdentifier(certificate, api);
@@ -110,12 +115,12 @@ public class Certificates extends DuelsExtension implements Listener {
 
     private String replace(final String s, final String winner, final String loser, final Match match) {
         return s
-            .replace("%winner%", winner)
-            .replace("%loser%", loser)
-            .replace("%kit%", match.getKit() != null ? match.getKit().getName() : "none")
-            .replace("%arena%", match.getArena().getName())
-            .replace("%bet%", String.valueOf(match.getBet()))
-            .replace("%date%", format.format(new Date()));
+                .replace("%winner%", winner)
+                .replace("%loser%", loser)
+                .replace("%kit%", match.getKit() != null ? match.getKit().getName() : "none")
+                .replace("%arena%", match.getArena().getName())
+                .replace("%bet%", String.valueOf(match.getBet()))
+                .replace("%date%", format.format(new Date()));
     }
 
     @EventHandler
